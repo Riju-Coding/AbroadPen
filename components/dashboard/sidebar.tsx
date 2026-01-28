@@ -3,18 +3,31 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { LayoutDashboard, MapPin, Building2, UserPlus, Users, DollarSign, BarChart3, UserCog, ShieldCheck, Languages } from "lucide-react"
+import {
+  LayoutDashboard,
+  MapPin,
+  Building2,
+  UserPlus,
+  Users,
+  DollarSign,
+  BarChart3,
+  UserCog,
+  ShieldCheck,
+  Languages,
+} from "lucide-react"
 
 interface SidebarProps {
   userData: {
     role: "super_admin" | "consultant"
-    name: string
   }
+  isSidebarOpen: boolean
+  setSidebarOpen: (isOpen: boolean) => void
 }
 
-export function Sidebar({ userData }: SidebarProps) {
+export function Sidebar({ userData, isSidebarOpen, setSidebarOpen }: SidebarProps) {
   const pathname = usePathname()
 
+  // Define your link arrays as before
   const superAdminLinks = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/locations", label: "Locations", icon: MapPin },
@@ -38,8 +51,16 @@ export function Sidebar({ userData }: SidebarProps) {
   const links = userData.role === "super_admin" ? superAdminLinks : consultantLinks
 
   return (
-    <aside className="w-64 border-r border-border bg-card">
-      <div className="flex h-16 items-center border-b border-border px-6">
+    <aside
+      className={cn(
+        "w-64 border-r bg-card transition-transform duration-300 ease-in-out z-50",
+        // These classes handle the mobile drawer behavior
+        "fixed inset-y-0 left-0 -translate-x-full md:relative md:translate-x-0",
+        // This class slides the drawer in when the state is true
+        isSidebarOpen && "translate-x-0"
+      )}
+    >
+      <div className="flex h-16 items-center border-b px-6">
         <h1 className="text-xl font-bold">AbroadPen</h1>
       </div>
       <nav className="space-y-1 p-4">
@@ -50,11 +71,12 @@ export function Sidebar({ userData }: SidebarProps) {
             <Link
               key={link.href}
               href={link.href}
+              onClick={() => setSidebarOpen(false)} // Close sidebar on link click
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
               )}
             >
               <Icon className="h-4 w-4" />

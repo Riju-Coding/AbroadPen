@@ -13,7 +13,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import { useRouter } from "next/navigation"
-import { LogOut, User } from "lucide-react"
+// Import the Menu icon
+import { LogOut, User, Menu } from "lucide-react"
 
 interface HeaderProps {
   userData: {
@@ -21,9 +22,11 @@ interface HeaderProps {
     email: string
     role: "super_admin" | "consultant"
   }
+  // Add the toggleSidebar function to the props
+  toggleSidebar: () => void
 }
 
-export function Header({ userData }: HeaderProps) {
+export function Header({ userData, toggleSidebar }: HeaderProps) {
   const router = useRouter()
 
   const handleSignOut = async () => {
@@ -32,6 +35,7 @@ export function Header({ userData }: HeaderProps) {
   }
 
   const getInitials = (name: string) => {
+    if (!name) return ""
     return name
       .split(" ")
       .map((n) => n[0])
@@ -41,17 +45,26 @@ export function Header({ userData }: HeaderProps) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-6">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-card px-4 md:px-6">
       <div className="flex items-center gap-4">
-        <span className="text-sm text-muted-foreground">
+        {/* --- THIS IS THE NEW PART --- */}
+        {/* Mobile menu button, hidden on medium screens and up */}
+        <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleSidebar}>
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Sidebar</span>
+        </Button>
+        {/* --- END OF NEW PART --- */}
+
+        <span className="text-sm font-medium text-muted-foreground hidden sm:block">
           {userData.role === "super_admin" ? "Super Admin" : "Consultant"}
         </span>
       </div>
 
+      {/* This DropdownMenu section remains exactly as you had it */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-            <Avatar>
+            <Avatar className="h-10 w-10">
               <AvatarFallback>{getInitials(userData.name)}</AvatarFallback>
             </Avatar>
           </Button>
@@ -69,7 +82,7 @@ export function Header({ userData }: HeaderProps) {
             Profile
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleSignOut}>
+          <DropdownMenuItem onClick={handleSignOut} className="text-red-500 focus:text-red-500">
             <LogOut className="mr-2 h-4 w-4" />
             Sign out
           </DropdownMenuItem>

@@ -80,8 +80,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/resources" className="text-white/70 hover:text-[#f2c62f] transition-colors font-medium">
-                Resources
+              <Link href="/contact" className="text-white/70 hover:text-[#f2c62f] transition-colors font-medium">
+                Contact Us
               </Link>
             </li>
           </ul>
@@ -114,30 +114,40 @@ export function Footer() {
         <div>
           <h4 className="text-lg font-bold mb-6 text-[#f2c62f]">Contact Us</h4>
           <ul className="space-y-4 font-medium">
-            <li className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-[#f2c62f] shrink-0 mt-0.5" />
-              <span className="text-white/70">123 Education Plaza, University Road, New Delhi, India</span>
-            </li>
             <li className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-[#f2c62f] shrink-0" />
-              <span className="text-white/70">+91 98765 43210</span>
+              <a href="tel:+917827262135" className="text-white/70 hover:text-[#f2c62f] transition-colors">
+                +91 7827262135
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-[#f2c62f] shrink-0" />
-              <span className="text-white/70">support@abroadpen.com</span>
+              <a href="mailto:admission@abroadpen.com" className="text-white/70 hover:text-[#f2c62f] transition-colors">
+                admission@abroadpen.com
+              </a>
+            </li>
+            <li className="flex items-start gap-3">
+              <MapPin className="h-5 w-5 text-[#f2c62f] shrink-0 mt-1" />
+              <span className="text-white/70">
+                3rd Floor ALT F, Near Sarita Bihar Metro Station, New Delhi, India
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <MapPin className="h-5 w-5 text-[#f2c62f] shrink-0 mt-1" />
+              <span className="text-white/70">J-Block, Sector 10, Faridabad, Haryana, India - 121006</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
-        <p>© 2025 AbroadPen. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} AbroadPen. All rights reserved.</p>
         <div className="flex gap-6">
-          <Link href="/privacy" className="hover:text-[#f2c62f]">
+          <Link href="/privacy-policy" className="hover:text-[#f2c62f] transition-colors">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="hover:text-[#f2c62f]">
-            Terms of Service
+          <Link href="/terms-and-conditions" className="hover:text-[#f2c62f] transition-colors">
+            Terms & Conditions
           </Link>
         </div>
       </div>
