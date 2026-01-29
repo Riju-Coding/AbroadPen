@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from "@/lib/auth-context"
 import { EnquiryModalProvider } from "@/components/enquiry-provider"
+import { FloatingContact } from "@/components/floating-contact" // <--- Import here
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -41,7 +42,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* 1. Added suppressHydrationWarning here */}
       <body 
         className={`font-sans antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning={true}
@@ -49,12 +49,17 @@ export default function RootLayout({
         <AuthProvider>
           <EnquiryModalProvider>
             
-            {/* 2. Wrapped Navbar in a suppression div to handle the Radix ID error */}
             <div suppressHydrationWarning={true}>
               <Navbar />
             </div>
 
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-16 md:pb-0"> 
+               {/* Added pb-16 to main so content isn't hidden behind mobile navbar */}
+               {children}
+            </main>
+
+            <FloatingContact /> {/* <--- Add component here */}
+            
             <Footer />
             <Toaster />
           </EnquiryModalProvider>
