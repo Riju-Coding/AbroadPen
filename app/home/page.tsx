@@ -4,6 +4,7 @@ import { slugify } from "@/lib/slugify"
 import type React from "react"
 
 import { useState, useEffect } from "react"
+import { useEnquiryModal } from "@/components/enquiry-provider" // Import the hook
 import Link from "next/link"
 import { collection, getDocs, query, addDoc } from "firebase/firestore"
 import { db } from "@/lib/firebase"
@@ -22,7 +23,7 @@ export default function PublicHomePage() {
   const [loading, setLoading] = useState(true)
   const [enquiryLoading, setEnquiryLoading] = useState(false)
   const { toast } = useToast()
-
+  const { openModal } = useEnquiryModal()
   const [enquiryForm, setEnquiryForm] = useState({
     name: "",
     email: "",
@@ -137,12 +138,14 @@ export default function PublicHomePage() {
               </div>
               <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
                 <Button
+                  onClick={openModal}
                   size="lg"
                   className="bg-[#f2c62f] text-[#37476b] hover:bg-[#f2c62f]/90 h-14 px-8 text-lg font-bold"
                 >
                   Apply for 2024-25 Intake
                 </Button>
                 <Button
+                  onClick={openModal}
                   size="lg"
                   variant="outline"
                   className="h-14 px-8 text-lg font-bold border-white/30 text-white hover:bg-white/10 bg-transparent"
@@ -312,7 +315,9 @@ export default function PublicHomePage() {
                     to post-arrival assistance.
                   </p>
                 </div>
-                <Button className="bg-[#37476b] text-white hover:bg-[#37476b]/90 h-14 px-8 rounded-full font-bold">
+                <Button 
+                onClick={openModal}
+                className="bg-[#37476b] text-white hover:bg-[#37476b]/90 h-14 px-8 rounded-full font-bold">
                   Learn Our Story
                 </Button>
               </div>
@@ -486,10 +491,13 @@ export default function PublicHomePage() {
             Book a free 30-minute consultation with our senior counsellors today. No strings attached!
           </p>
           <div className="flex flex-wrap justify-center gap-6">
-            <Button size="lg" variant="secondary" className="h-14 px-10 text-lg font-bold">
+            <Button 
+             onClick={openModal}
+            size="lg" variant="secondary" className="h-14 px-10 text-lg font-bold">
               Book Appointment Now
             </Button>
             <Button
+              onClick={openModal}
               size="lg"
               variant="outline"
               className="h-14 px-10 text-lg font-bold border-white text-white hover:bg-white hover:text-primary bg-transparent"

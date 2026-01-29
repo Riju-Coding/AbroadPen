@@ -1,8 +1,8 @@
-import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from "@/lib/auth-context"
+import { EnquiryModalProvider } from "@/components/enquiry-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -41,12 +41,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased min-h-screen flex flex-col`}>
+      {/* 1. Added suppressHydrationWarning here */}
+      <body 
+        className={`font-sans antialiased min-h-screen flex flex-col`}
+        suppressHydrationWarning={true}
+      >
         <AuthProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <Toaster />
+          <EnquiryModalProvider>
+            
+            {/* 2. Wrapped Navbar in a suppression div to handle the Radix ID error */}
+            <div suppressHydrationWarning={true}>
+              <Navbar />
+            </div>
+
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <Toaster />
+          </EnquiryModalProvider>
         </AuthProvider>
         <Analytics />
       </body>
